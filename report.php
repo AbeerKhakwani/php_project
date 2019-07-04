@@ -11,10 +11,10 @@
              include 'survey.php';
 
              foreach ($questions as $question) {
-               echo " </br>" . $question['question']. " </br>";
-               echo " </br> Top Three Common Answers </br>";
-
                if ($question["type"] == "text" ){
+                 echo " </br>" . $question['question']. " </br>";
+                 echo " </br> Top Three Common Answers </br>";
+
                  foreach (common_text_answers($question["name"]) as $key => $value) {
                    echo ($key+1) . ". " .$value ."</br>";
                 }else{

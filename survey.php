@@ -29,10 +29,12 @@
     return $stmt->fetchAll();
   }
 
-  function common_text_answers($column){
+  function common_text_answers($column,$column2){
     global $db;
-    $sql = "SELECT [column] FROM surveys GROUP BY [column] ORDER BY COUNT(*) DESC LIMIT 3";
+    $sql = "SELECT [column], [column2] FROM surveys GROUP BY [column],[column2] ORDER BY COUNT(*) DESC LIMIT 3";
     $sql = str_replace('[column]', $column, $sql);
+    $sql = str_replace('[column2]', $column2, $sql);
+
     $stmt = $db->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_COLUMN);
