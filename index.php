@@ -22,27 +22,19 @@
                 }
                 }
               foreach ($questions as $question) {
+                 echo "<label> " . $question['question'] . "</label>";
                 if ($question["type"] == "text" ){
-                  echo
-                  "<div class='form-group'>
-                  <label> " . $question['question'] . "</label>
-                  <input name='" . $question['name']. "' class='form-control' type='text'>
-                  </div>";
-                  }elseif ($question["type"] == "mc") {
-                  echo
-                    "<div class='form-group'>
-                    <label>" . $question['question'] ."</label>
-                    <select name='". $question['name']."' class='form-control'>";
-                    foreach ($question['answers'] as $choice) {
-                      echo "<option value='$choice'>". $choice ."</option>";
-                    };
-                    echo "</select>
-                  </div>";
+                  echo "<input name='" . $question['name']. "' class='form-control' type='text'>";
+                }else{
+                    echo "<select name='". $question['name']."' class='form-control'>";
+                      foreach ($question['answers'] as $choice) {
+                        echo "<option value='$choice'>". $choice ."</option>";
+                      };
+                    echo "</select>";
                   }
                 }
               ?>
-            <button type="submit" class="btn btn-secondary">Submit
-            </button>
+            <button type="submit" class="btn btn-secondary">Submit </button>
             </form>
         </div>
       </div>

@@ -10,16 +10,16 @@
       echo $e->getMessage();
   }
 
-  $success = create();
+  // $success = create();
 
- if ($success) {
-    header("Location:thankyou.php");
- }
+ // if ($success) {
+ //    header("Location:thankyou.php");
+ // }
 
-  function create() {
+  function create($type) {
     global $db;
     $stmt = $db->prepare("INSERT INTO surveys( pony_type, princess_type, fav_pet, more_char, mlp_fanfic) VALUES (?, ?, ?, ?, ?)");
-    return $stmt->execute([$_POST['pony_type'], $_POST['princess_type'], $_POST['fav_pet'], $_POST['more_char'], $_POST['mip_fanfic']]);
+    return $stmt->execute($type, $type, $type, $type,$type);
   }
 
   function multiple_choice_report($type){
@@ -29,11 +29,13 @@
     return $stmt->fetchAll();
   }
 
-  function common_text_answers($type){
+  function common_text_answers($column){
     global $db;
-    $stmt = $db->prepare("SELECT ? FROM surveys GROUP BY ? ORDER BY COUNT(*) DESC LIMIT 3");
-    $stmt->execute([$type, $type]);
-    return $stmt->fetchAll();
+    $sql = "SELECT [column] FROM surveys GROUP BY [column] ORDER BY COUNT(*) DESC LIMIT 3";
+    $sql = str_replace('[column]', $column, $sql);
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
   }
 
   function unique_text_answers($type){
