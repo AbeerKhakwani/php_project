@@ -1,8 +1,8 @@
 <?php
   //Connect to db
   $dsn = "mysql://hostname=localhost;dbname=survey"; // Data Source Name
-  $user = "";
-  $pass = "";
+  $user = "abeer";
+  $pass = "abeer";
 
   try {
       $db = new PDO($dsn, $user, $pass);
@@ -33,14 +33,14 @@
 
   function common_text_answers(){
     global $db;
-    $stmt = $db->prepare("SELECT a.answer, q.id FROM survey_answers AS a JOIN survey_questions AS q ON q.id = a.question_id WHERE q.type = 'text' GROUP BY a.answer, q.id ORDER BY COUNT(*) DESC LIMIT 3");
+    $stmt = $db->prepare("SELECT a.answer, q.id, COUNT(*) as count FROM survey_answers AS a JOIN survey_questions AS q ON q.id = a.question_id WHERE q.type = 'text' GROUP BY a.answer, q.id ORDER BY COUNT(*) DESC LIMIT 3");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   function unique_text_answers(){
     global $db;
-    $stmt = $db->prepare("SELECT a.answer, q.id FROM survey_answers AS a JOIN survey_questions AS q ON q.id = a.question_id WHERE q.type = 'text' GROUP BY a.answer, q.id ORDER BY COUNT(*) ASC LIMIT 3");
+    $stmt = $db->prepare("SELECT a.answer, q.id, COUNT(*) as count FROM survey_answers AS a JOIN survey_questions AS q ON q.id = a.question_id WHERE q.type = 'text' GROUP BY a.answer, q.id ORDER BY COUNT(*) ASC LIMIT 3");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }

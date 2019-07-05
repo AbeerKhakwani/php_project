@@ -12,13 +12,13 @@ if($_POST){
   }
 }
 function top_three_inputs($answer){
-  $array = $answer(["more_char", "mlp_fanfic"]);
+  $array = $answer();
   $newarray = array();
   foreach ($array as $key => $value) {
     if(array_key_exists($key,$newarray)){
-      array_push($newarray[$value['id']], $value['answer']);
+      array_push($newarray[$value['id']], [$value['answer'],$value['count']]);
     }else{
-      $newarray[$value['id']] = [$value['answer']];
+      $newarray[$value['id']] = [[$value['answer'], $value['count']]];
     }
   }
   return $newarray;
@@ -30,13 +30,3 @@ function top_three_inputs($answer){
     }
   }
   ?>
-  <!-- // foreach ($input as $key => $value) {
-    // if(array_key_exists($key,$newarray)){
-    //   array_push($newarray[$key]['id'], [$key]['answer']);
-    // }else{
-    echo "<pre>". print_r($newarray, true)."</pre>";
-
-      $newarray[$key]['id'] = [[$key]];
-    // }
-  // }
-  echo "<pre>". print_r($newarray, true)."</pre>"; -->
