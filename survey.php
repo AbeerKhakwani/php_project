@@ -9,41 +9,44 @@
   } catch (PDOException $e) {
       echo $e->getMessage();
   }
+  if(isset($_POST['submit'])){
+    $success = create();
 
-  // $success = create();
+    if ($success) {
+      header("Location:thankyou.php");
+    }
+  }
 
- // if ($success) {
- //    header("Location:thankyou.php");
- // }
-
-  function create($type) {
+  function create() {
     global $db;
     $stmt = $db->prepare("INSERT INTO surveys( pony_type, princess_type, fav_pet, more_char, mlp_fanfic) VALUES (?, ?, ?, ?, ?)");
-    return $stmt->execute($type, $type, $type, $type,$type);
+    return $stmt->execute($_POST['pony_type'], $_POST['princess_type'], $_POST['fav_pet'], $_POST['more_char'], $_POST['mlp_fanfic']);
   }
 
   function multiple_choice_report($type){
     global $db;
-    $stmt = $db->prepare("SELECT ?, COUNT(*) FROM surveys GROUP BY ?");
-    $stmt->execute([$type, $type]);
-    return $stmt->fetchAll();
-  }
-
-  function common_text_answers($column,$column2){
-    global $db;
-    $sql = "SELECT [column], [column2] FROM surveys GROUP BY [column],[column2] ORDER BY COUNT(*) DESC LIMIT 3";
-    $sql = str_replace('[column]', $column, $sql);
-    $sql = str_replace('[column2]', $column2, $sql);
-
+    $sql = "SELECT [column], COUNT(*) FROM surveys GROUP BY [column]";
+    $sql = str_replace('[column]', $type, $sql);
     $stmt = $db->prepare($sql);
     $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    return $stmt->fetchAll();
   }
 
-  function unique_text_answers($type){
+  function common_text_answers($array){
     global $db;
-    $stmt = $db->prepare("SELECT ? FROM surveys GROUP BY ? ORDER BY COUNT(*) ASC LIMIT 3");
-    $stmt->execute([$type, $type]);
-    return $stmt->fetchAll();
+    $sql = "SELECT [column] FROM surveys GROUP BY [column] ORDER BY COUNT(*)  DESC LIMIT 3";
+    $sql = str_replace('[column]', join(",",$array), $sql);
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  function unique_text_answers($array){
+    global $db;
+    $sql = "SELECT [column] FROM surveys GROUP BY [column] ORDER BY COUNT(*) ASC LIMIT 3";
+    $sql = str_replace('[column]', join(",",$array), $sql);
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 ?>

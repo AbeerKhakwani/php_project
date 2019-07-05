@@ -7,22 +7,27 @@
          <div class="card card-body bg-light">
            <h1>Survey Report</h1>
            <?php
-             include 'questions.php';
-             include 'survey.php';
+           include 'questions.php';
+           include 'report_controller.php';
 
-             foreach ($questions as $question) {
-               if ($question["type"] == "text" ){
-                 echo " </br>" . $question['question']. " </br>";
-                 echo " </br> Top Three Common Answers </br>";
+            $text_questions_common_3 = top_three_inputs("common_text_answers");
+            $text_questions_unique_3 = top_three_inputs("unique_text_answers");
 
-                 foreach (common_text_answers($question["name"]) as $key => $value) {
-                   echo ($key+1) . ". " .$value ."</br>";
-                }else{
-                  
-                }
-               }
-             }
-             ?>
+            foreach ($questions as $question) {
+              if ($question["type"] == "text" ){
+                echo " </br> </br>" . $question['question'];
+                echo " </br> Top Three Common Answers </br>";
+                echo "1: " . $text_questions_common_3[$question['name']][0];
+                echo "</br> 2: " . $text_questions_common_3[$question['name']][1];
+                echo "</br> 3: " .$text_questions_common_3[$question['name']][2];
+
+                echo " </br> </br> Top Three Unique Answers </br>";
+                echo "1: " . $text_questions_unique_3[$question['name']][0];
+                echo "</br> 2: " . $text_questions_unique_3[$question['name']][1];
+                echo "</br> 3: " .$text_questions_unique_3[$question['name']][2];
+              }
+            }
+          ?>
          </div>
       </div>
       <div class="col-sm"></div>

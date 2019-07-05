@@ -28,7 +28,7 @@
                 }else{
                     echo "<select name='". $question['name']."' class='form-control'>";
                       foreach ($question['answers'] as $choice) {
-                        echo "<option value='$choice'>". $choice ."</option>";
+                        echo "<option value='". strtolower($choice) . "'>". $choice ."</option>";
                       };
                     echo "</select>";
                   }
