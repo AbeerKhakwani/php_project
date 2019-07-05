@@ -1,4 +1,5 @@
 <?php
+
   //Connect to db
   $dsn = "mysql://hostname=localhost;dbname=survey"; // Data Source Name
   $user = "abeer";
@@ -9,27 +10,19 @@
   } catch (PDOException $e) {
       echo $e->getMessage();
   }
-  if(isset($_POST['submit'])){
-    $success = create();
-
-    if ($success) {
-      header("Location:thankyou.php");
-    }
-  }
-
-  function create() {
+  function create($pony_type, $princess_type, $fav_pet, $more_char, $mlp_fanfic) {
     global $db;
     $stmt = $db->prepare("INSERT INTO surveys( pony_type, princess_type, fav_pet, more_char, mlp_fanfic) VALUES (?, ?, ?, ?, ?)");
-    return $stmt->execute($_POST['pony_type'], $_POST['princess_type'], $_POST['fav_pet'], $_POST['more_char'], $_POST['mlp_fanfic']);
+    return $stmt->execute([$pony_type, $princess_type, $fav_pet, $more_char, $mlp_fanfic]);
   }
 
   function multiple_choice_report($type){
     global $db;
-    $sql = "SELECT [column], COUNT(*) FROM surveys GROUP BY [column]";
-    $sql = str_replace('[column]', $type, $sql);
+    $sql = "SELECT ?, COUNT(*) as count FROM surveys GROUP BY ?";
+    $sql = str_replace('?', $type, $sql);
     $stmt = $db->prepare($sql);
     $stmt->execute();
-    return $stmt->fetchAll();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   function common_text_answers($array){

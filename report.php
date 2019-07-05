@@ -12,19 +12,21 @@
 
             $text_questions_common_3 = top_three_inputs("common_text_answers");
             $text_questions_unique_3 = top_three_inputs("unique_text_answers");
-
+            // each_multiple_choice_x_used();
             foreach ($questions as $question) {
+              echo " </br> </br> QUESTION: " . $question['question'];
+
               if ($question["type"] == "text" ){
-                echo " </br> </br>" . $question['question'];
                 echo " </br> Top Three Common Answers </br>";
                 echo "1: " . $text_questions_common_3[$question['name']][0];
                 echo "</br> 2: " . $text_questions_common_3[$question['name']][1];
                 echo "</br> 3: " .$text_questions_common_3[$question['name']][2];
-
                 echo " </br> </br> Top Three Unique Answers </br>";
                 echo "1: " . $text_questions_unique_3[$question['name']][0];
                 echo "</br> 2: " . $text_questions_unique_3[$question['name']][1];
                 echo "</br> 3: " .$text_questions_unique_3[$question['name']][2];
+              }else{
+                each_multiple_choice_x_used($question['name']);
               }
             }
           ?>
