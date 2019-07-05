@@ -1,5 +1,4 @@
 <?php
-
   //Connect to db
   $dsn = "mysql://hostname=localhost;dbname=survey"; // Data Source Name
   $user = "abeer";
@@ -10,35 +9,38 @@
   } catch (PDOException $e) {
       echo $e->getMessage();
   }
-  function create($pony_type, $princess_type, $fav_pet, $more_char, $mlp_fanfic) {
+// Returns all survey questions in db
+  function get_all_survey_questions(){
     global $db;
-    $stmt = $db->prepare("INSERT INTO surveys( pony_type, princess_type, fav_pet, more_char, mlp_fanfic) VALUES (?, ?, ?, ?, ?)");
-    return $stmt->execute([$pony_type, $princess_type, $fav_pet, $more_char, $mlp_fanfic]);
+    $stmt = $db->prepare("SELECT * FROM survey_questions");
+    $stmt->execute();
+    return $stmt->fetchAll();
+  }
+// INSERTS row into db of answers from survey
+  function create($question_id, $answer) {
+    global $db;
+    $stmt = $db->prepare("INSERT INTO survey_answers( question_id, answer) VALUES (?,?)");
+    return $stmt->execute([$question_id, $answer]);
   }
 
-  function multiple_choice_report($type){
+// Returns the count of each multiple choice answer
+  function multiple_choice_report(){
     global $db;
-    $sql = "SELECT ?, COUNT(*) as count FROM surveys GROUP BY ?";
-    $sql = str_replace('?', $type, $sql);
-    $stmt = $db->prepare($sql);
+    $stmt = $db->prepare("SELECT a.answer, COUNT(*) as count FROM survey_answers AS a JOIN survey_questions AS q ON q.id = a.question_id WHERE q.type = 'mc' GROUP BY answer");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  function common_text_answers($array){
+  function common_text_answers(){
     global $db;
-    $sql = "SELECT [column] FROM surveys GROUP BY [column] ORDER BY COUNT(*)  DESC LIMIT 3";
-    $sql = str_replace('[column]', join(",",$array), $sql);
-    $stmt = $db->prepare($sql);
+    $stmt = $db->prepare("SELECT a.answer, q.id FROM survey_answers AS a JOIN survey_questions AS q ON q.id = a.question_id WHERE q.type = 'text' GROUP BY a.answer, q.id ORDER BY COUNT(*) DESC LIMIT 3");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  function unique_text_answers($array){
+  function unique_text_answers(){
     global $db;
-    $sql = "SELECT [column] FROM surveys GROUP BY [column] ORDER BY COUNT(*) ASC LIMIT 3";
-    $sql = str_replace('[column]', join(",",$array), $sql);
-    $stmt = $db->prepare($sql);
+    $stmt = $db->prepare("SELECT a.answer, q.id FROM survey_answers AS a JOIN survey_questions AS q ON q.id = a.question_id WHERE q.type = 'text' GROUP BY a.answer, q.id ORDER BY COUNT(*) ASC LIMIT 3");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }

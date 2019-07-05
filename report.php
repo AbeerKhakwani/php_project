@@ -7,26 +7,27 @@
          <div class="card card-body bg-light">
            <h1>Survey Report</h1>
            <?php
-           include 'questions.php';
-           include 'report_controller.php';
-
+           include 'supporting_functions.php';
+            // Retuen array of three top unique and common so to only query once:
             $text_questions_common_3 = top_three_inputs("common_text_answers");
             $text_questions_unique_3 = top_three_inputs("unique_text_answers");
-            // each_multiple_choice_x_used();
-            foreach ($questions as $question) {
+
+            foreach (get_all_survey_questions() as $question) {
               echo " </br> </br> QUESTION: " . $question['question'];
 
               if ($question["type"] == "text" ){
                 echo " </br> Top Three Common Answers </br>";
-                echo "1: " . $text_questions_common_3[$question['name']][0];
-                echo "</br> 2: " . $text_questions_common_3[$question['name']][1];
-                echo "</br> 3: " .$text_questions_common_3[$question['name']][2];
+                $common_q = $text_questions_common_3[$question['id']];
+                foreach ($common_q as $index => $common) {
+                  echo ($index +1) . " . " . $common . "</br>";
+                }
                 echo " </br> </br> Top Three Unique Answers </br>";
-                echo "1: " . $text_questions_unique_3[$question['name']][0];
-                echo "</br> 2: " . $text_questions_unique_3[$question['name']][1];
-                echo "</br> 3: " .$text_questions_unique_3[$question['name']][2];
-              }else{
-                each_multiple_choice_x_used($question['name']);
+                $unique_q = $text_questions_unique_3[$question['id']];
+                foreach($unique_q as $index => $common) {
+                  echo ($index +1) . " . " . $common . "</br>";
+                }
+                }else{
+                each_multiple_choice_x_used();
               }
             }
           ?>

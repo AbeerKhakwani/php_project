@@ -11,22 +11,24 @@
           <br/>
           <h1>Survey</h1>
           <div class="card card-body bg-light">
-            <form action="report_controller.php" method="post"/>
+            <form action="supporting_functions.php" method="post"/>
             <!-- This php loops through array of questions and creates a form with input type indicated by the question type.-->
             <!-- Assumption: The question set is Dynamic and can change. -->
             <?php
             // Include the questions
-            include 'questions.php';
-            include 'report_controller.php';
+            include 'supporting_functions.php';
+            // include 'supporting_functions.php';
+
             // For  every question if it's a text type creates input box else creates select dropdown.
-            foreach ($questions as $question){
+            foreach (get_all_survey_questions() as $question){
                 echo "<label> " . $question['question'] . "</label>";
                 if ($question["type"] == "text"){
-                    echo "<input name='" . $question['name'] . "' class='form-control' type='text' required>";
+                    echo "<input name='" . $question['id'] . "' class='form-control' type='text' required>";
                 }
                 else{
-                    echo "<select name='" . $question['name'] . "' class='form-control' required>";
-                    foreach ($question['answers'] as $choice){
+                    $answers =  explode (",", $question['answers']);
+                    echo "<select name='" . $question['id'] . "' class='form-control' required>";
+                    foreach ($answers as $choice){
                         echo "<option value='" . strtolower($choice) . "'>" . $choice . "</option>";
                     };
                     echo "</select>";
