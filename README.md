@@ -6,8 +6,11 @@
 
 ## Description
 
-This web app displays questions both multiple choice and input that users answer, It saves the answers to the db.
-The report page summarizes the previously submitted answers. For multiple-choice questions, the report should show the number of responses for each choice. For free text questions, the report should show the three most common and unique answers along with the number of responses for each of those popular answers.
+ * This web app displays questions for a survey.
+ * The Survey has both multiple choice and input based questions.
+ * The report page summarizes the previously submitted answers.
+     * For multiple-choice questions, the report shows the number of responses for each choice.
+     * For free text questions, the report show the three most common and unique answers along with the number of responses for each of those popular answers.
 
 ## Setup/Installation Requirements
 
@@ -16,8 +19,7 @@ The report page summarizes the previously submitted answers. For multiple-choice
 * In phpMyAdmin create db called 'survey'
 * import db.sql to survey db
 * Open this app in editor and in db.php change user and pass to your db password and username:   
-  ```$user = "";
-     $pass = "";```
+  ```$user = ""; $pass = "";```
 * Under My Website click `Survey`
 * Open site in browser localhost:`yourport`
 
@@ -39,4 +41,4 @@ For questions or comments, please contact me through GitHub.
 ### License
 
 *This website is licensed under the MIT license.*  
-Copyright (c) 2016 **Abeer Khakwani_**
+Copyright (c) 2016 **_Abeer Khakwani_**
