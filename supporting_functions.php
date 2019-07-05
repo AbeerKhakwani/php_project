@@ -15,7 +15,7 @@ function top_three_inputs($answer){
   $array = $answer();
   $newarray = array();
   foreach ($array as $key => $value) {
-    if(array_key_exists($key,$newarray)){
+    if(array_key_exists($value['id'],$newarray)){
       array_push($newarray[$value['id']], [$value['answer'],$value['count']]);
     }else{
       $newarray[$value['id']] = [[$value['answer'], $value['count']]];
