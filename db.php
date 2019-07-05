@@ -1,8 +1,8 @@
 <?php
   //Connect to db
   $dsn = "mysql://hostname=localhost;dbname=survey"; // Data Source Name
-  $user = "abeer";
-  $pass = "abeer";
+  $user = "";
+  $pass = "";
 
   try {
       $db = new PDO($dsn, $user, $pass);

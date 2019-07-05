@@ -11,9 +11,15 @@ The report page summarizes the previously submitted answers. For multiple-choice
 
 ## Setup/Installation Requirements
 
-* Clone the repository
-* Using the command line, navigate to the project's root directory
-* Open site in browser localhost:8000
+* Clone the repository to MAMP/WAMP htdocs folder
+* Start MAMP server and click `Open Webstart Page`
+* In phpMyAdmin create db called 'survey'
+* import db.sql to survey db
+* Open this app in editor and in db.php change user and pass to your db password and username:   
+  ```$user = "";
+     $pass = "";```
+* Under My Website click `Survey`
+* Open site in browser localhost:`yourport`
 
 ## Known Bugs
 
