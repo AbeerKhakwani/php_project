@@ -20,8 +20,11 @@
 * import db.sql to survey db
 * Open this app in editor and in db.php change user and pass to your db password and username:   
   ```$user = ""; $pass = "";```
-* Under My Website click `Survey`
-* Open site in browser localhost:`yourport`
+* Under My Website click `php_project`
+* Open site in browser
+```
+localhost:`yourport`/php_project
+```
 
 ## Known Bugs
 
