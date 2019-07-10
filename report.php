@@ -14,7 +14,9 @@
 
             foreach (get_all_survey_questions() as $question) {
               echo " </br> </br> QUESTION: " . $question['question'];
-
+              // If the question is text based
+              // Shows the Top three common and Unique answers with count on how many times they have been amswered.
+              // If the Question is Multiple Choice returns each answer and how many times it was answered. 
               if ($question["type"] == "text" ){
                 echo " </br> Top Three Common Answers </br>";
                 $common_q = $text_questions_common_3[$question['id']];
