@@ -11,6 +11,8 @@ if($_POST){
     header("Location:thankyou.php");
   }
 }
+// Loops through the returned data on the common and most unique answers
+// Returns an associative array of the common and most unique answers with count
 function top_three_inputs($answer){
   $array = $answer();
   $newarray = array();
@@ -23,7 +25,7 @@ function top_three_inputs($answer){
   }
   return $newarray;
 }
-
+// Loops through data of each multiple choice answer with the count of how many times its been selected
   function each_multiple_choice_x_used(){
     foreach (multiple_choice_report() as $a) {
       echo "</br> " .$a['answer'] . " was answered  " . $a['count'] . " times";

@@ -30,14 +30,14 @@
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
-
+  // Returns the top three most typed answers and their count
   function common_text_answers(){
     global $db;
     $stmt = $db->prepare("SELECT a.answer, q.id, COUNT(*) as count FROM survey_answers AS a JOIN survey_questions AS q ON q.id = a.question_id WHERE q.type = 'text' GROUP BY a.answer, q.id ORDER BY COUNT(*) DESC LIMIT 3");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
-
+  // Returns the top three most unique typed answers and their count 
   function unique_text_answers(){
     global $db;
     $stmt = $db->prepare("SELECT a.answer, q.id, COUNT(*) as count FROM survey_answers AS a JOIN survey_questions AS q ON q.id = a.question_id WHERE q.type = 'text' GROUP BY a.answer, q.id ORDER BY COUNT(*) ASC LIMIT 3");
